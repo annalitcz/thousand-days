@@ -23,14 +23,14 @@ document.getElementById('dateForm').addEventListener('submit', function(event) {
         function hitungpasaran(_tanggal) {
             var awal = new Date(1970, 0, 2);
             var pembagian = (_tanggal.getTime() - awal.getTime() + 86400000) / 432000000;
-            var sisa = Math.round((pembagian - Math.floor(pembagian)) * 10) / 2;
+            var sisa = Math.floor(pembagian % 5);  // Pastikan sisa adalah integer antara 0 dan 4
             switch (sisa) {
                 case 0: return "Wage";
                 case 1: return "Kliwon";
                 case 2: return "Legi";
                 case 3: return "Pahing";
                 case 4: return "Pon";
-                default: return "wrong";
+                default: return "";
             }
         }
 
