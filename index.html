@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung 1000 Hari</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hitung 1000 Hari dari Tanggal</h1>
+        <form id="dateForm">
+            <label for="inputDate">Masukkan Tanggal:</label>
+            <input type="date" id="inputDate" required>
+            <button type="submit">Hitung</button>
+        </form>
+        <div id="resultTableContainer">
+            <h2>Hasil Perhitungan</h2>
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Jangka Waktu</th>
+                        <th>Tanggal</th>
+                        <th>Pasaran</th>
+                    </tr>
+                </thead>
+                <tbody id="result"></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
