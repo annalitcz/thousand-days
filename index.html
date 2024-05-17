@@ -3,31 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hitung 1000 Hari</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Hitungan Hari Penting Setelah Meninggal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px;
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 50%;
+        }
+        button{
+            width: 60%;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #hasilTabel {
+            display: none;
+        }
+        footer{
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hitung Selamatan</h1>
-        <form id="dateForm">
-            <label for="inputDate">Masukkan Tanggal:</label>
-            <input type="date" id="inputDate" required>
-            <button type="submit">Hitung</button>
-        </form>
-        <div id="resultTableContainer">
-            <h2>Hasil Perhitungan</h2>
-            <table id="resultTable">
-                <thead>
-                    <tr>
-                        <th>Jangka Waktu</th>
-                        <th>Tanggal</th>
-                        <th>Pasaran</th>
-                    </tr>
-                </thead>
-                <tbody id="result"></tbody>
-            </table>
-        </div>
+        <h1>Hitung Tanggal Hari Selamatan</h1>
+        <label for="tanggalMeninggal">Tanggal Meninggal:</label>
+        <input type="date" id="tanggalMeninggal">
+        <button onclick="hitungTanggal()">Hitung</button>
+        <table id="hasilTabel">
+            <thead>
+                <tr>
+                    <th>Hari Ke</th>
+                    <th>Tanggal</th>
+                    <th>Pasaran</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>40</td>
+                    <td id="tgl40"></td>
+                    <td id="weton40"></td>
+                </tr>
+                <tr>
+                    <td>100</td>
+                    <td id="tgl100"></td>
+                    <td id="weton100"></td>
+                </tr>
+                <tr>
+                    <td>1000</td>
+                    <td id="tgl1000"></td>
+                    <td id="weton1000"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <script src="app.js"></script>
+
+    <script>
+        function hitungTanggal() {
+            const tanggalMeninggal = document.getElementById('tanggalMeninggal').value;
+            if (!tanggalMeninggal) {
+                alert('Silakan masukkan tanggal meninggal.');
+                return;
+            }
+
+            const tanggalMeninggalDate = new Date(tanggalMeninggal);
+
+            const tgl40 = new Date(tanggalMeninggalDate);
+            tgl40.setDate(tanggalMeninggalDate.getDate() + 40 - 1);
+
+            const tgl100 = new Date(tanggalMeninggalDate);
+            tgl100.setDate(tanggalMeninggalDate.getDate() + 100 - 1);
+
+            const tgl1000 = new Date(tanggalMeninggalDate);
+            tgl1000.setDate(tanggalMeninggalDate.getDate() + 1000 - 1);
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+            document.getElementById('tgl40').innerText = tgl40.toLocaleDateString('id-ID', options);
+            document.getElementById('weton40').innerText = getWeton(tgl40);
+
+            document.getElementById('tgl100').innerText = tgl100.toLocaleDateString('id-ID', options);
+            document.getElementById('weton100').innerText = getWeton(tgl100);
+
+            document.getElementById('tgl1000').innerText = tgl1000.toLocaleDateString('id-ID', options);
+            document.getElementById('weton1000').innerText = getWeton(tgl1000);
+
+            document.getElementById('hasilTabel').style.display = 'table';
+        }
+
+        function getWeton(date) {
+            const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const pasaran = ['Legi', 'Pahing', 'Pon', 'Wage', 'Kliwon'];
+
+            const dayOfWeek = date.getDay();
+            const baseDate = new Date(2024, 4, 24); // 24 Mei 2024 adalah Jumat Kliwon
+            const diffDays = Math.floor((date - baseDate) / (24 * 60 * 60 * 1000));
+            const pasaranIndex = (diffDays % 5 + 5) % 5; // Menghitung pasaran dengan mod 5
+
+            return `${hari[dayOfWeek]} ${pasaran[pasaranIndex]}`;
+        }
+    </script>
 </body>
 </html>
